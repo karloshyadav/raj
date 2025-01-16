@@ -5,15 +5,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = htmlspecialchars($_POST['phone']);
     $message = htmlspecialchars($_POST['message']);
 
-    // Your email details
     $to = "ykarlosh@gmail.com"; // Replace with your email
     $subject = "New Contact Form Submission";
-
-    $body = "You have received a new message from your website contact form.\n\n";
-    $body .= "Name: $name\n";
-    $body .= "Email: $email\n";
-    $body .= "Phone: $phone\n";
-    $body .= "Message:\n$message\n";
+    $body = "Name: $name\nEmail: $email\nPhone: $phone\nMessage:\n$message\n";
 
     $headers = "From: $email\r\n";
     $headers .= "Reply-To: $email\r\n";
@@ -21,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (mail($to, $subject, $body, $headers)) {
         echo "success";
     } else {
+        error_log("Mail failed to send. Check server configuration.");
         echo "fail";
     }
 } else {
